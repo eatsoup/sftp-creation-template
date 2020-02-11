@@ -41,14 +41,14 @@
         },
         "net_type": {
             "defaultValue": "Private",
-            "type": "string"
+            "type": "string",
             "metadata": {
                 "description": "Either Private or Public"
             }
         },
         "network_profile_id": {
             "defaultValue": "",
-            "type": "string"
+            "type": "string",
             "metadata": {
                 "description": "network id of the vnet"
             }
