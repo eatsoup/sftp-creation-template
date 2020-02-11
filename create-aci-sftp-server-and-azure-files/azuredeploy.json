@@ -38,6 +38,20 @@
             "metadata": {
                 "description": "Primary location for resources"
             }
+        },
+        "net_type": {
+            "defaultValue": "Private",
+            "type": "string"
+            "metadata": {
+                "description": "Either Private or Public"
+            }
+        },
+        "network_profile_id": {
+            "defaultValue": "",
+            "type": "string"
+            "metadata": {
+                "description": "network id of the vnet"
+            }
         }
     },
     "variables": {
@@ -163,13 +177,16 @@
                 ],
                 "osType": "Linux",
                 "ipAddress": {
-                    "type": "Public",
+                    "type": "[parameters('net_type')]",
                     "ports": [
                         {
                             "protocol": "TCP",
                             "port": 22
                         }
                     ]
+                },
+                "networkProfile":{
+                    "id": "[parameters('network_profile_id')]"
                 },
                 "restartPolicy": "OnFailure",
                 "volumes": [
