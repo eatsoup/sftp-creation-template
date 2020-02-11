@@ -53,6 +53,13 @@
                 "description": "vNet name"
             }
         },
+        "subnet_name": {
+            "defaultValue": "",
+            "type": "string",
+            "metadata": {
+                "description": "subnet name"
+            }
+        },
         "profile_name": {
             "defaultValue": "",
             "type": "string",
@@ -87,7 +94,7 @@
                                     "name": "my-ip-config-profile",
                                     "properties": {
                                         "subnet": {
-                                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', '[variables('vnet_name')]', 'private')]"
+                                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', [variables('vnet_name')], [variables('subnet_name')])]"
                                         }
                                     }
                                 }
