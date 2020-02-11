@@ -94,7 +94,7 @@
                                     "name": "my-ip-config-profile",
                                     "properties": {
                                         "subnet": {
-                                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', [variables('vnet_name')], [variables('subnet_name')])]"
+                                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', '[variables('vnet_name')]', '[variables('subnet_name')]')]"
                                         }
                                     }
                                 }
