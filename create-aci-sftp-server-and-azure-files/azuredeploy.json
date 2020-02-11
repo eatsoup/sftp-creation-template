@@ -46,11 +46,18 @@
                 "description": "Either Private or Public"
             }
         },
-        "network_profile_id": {
+        "vnet_name": {
             "defaultValue": "",
             "type": "string",
             "metadata": {
-                "description": "network id of the vnet"
+                "description": "vNet name"
+            }
+        },
+        "profile_name": {
+            "defaultValue": "",
+            "type": "string",
+            "metadata": {
+                "description": "network profile name"
             }
         }
     },
@@ -65,6 +72,31 @@
         "storageAccountName": "[concat('sftpstg', uniqueString(resourceGroup().id))]"
     },
     "resources": [
+        {
+            "type": "Microsoft.Network/networkProfiles",
+            "apiVersion": "2018-07-01",
+            "name": "[variables('profile_name')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "containerNetworkInterfaceConfigurations": [
+                    {
+                        "name": "[variables('profile_name')]",
+                        "properties": {
+                            "ipConfigurations": [
+                                {
+                                    "name": "my-ip-config-profile",
+                                    "properties": {
+                                        "subnet": {
+                                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', '[variables('vnet_name')]', 'private')]"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
         {
             "type": "Microsoft.Resources/deployments",
             "name": "pid-18f281fe-d1e1-502c-8b87-d945383dc75b",
@@ -186,7 +218,7 @@
                     ]
                 },
                 "networkProfile":{
-                    "id": "[parameters('network_profile_id')]"
+                    "id": "[resourceId('Microsoft.Network/networkProfiles', '[variables('profile_name')]')]"
                 },
                 "restartPolicy": "OnFailure",
                 "volumes": [
